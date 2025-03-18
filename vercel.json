@@ -1,32 +1,28 @@
-
 {
-    "//": "Bu dosya, Vercel platformunda FastAPI ile çalışan bir projeyi deploy etmek için gerekli yapılandırmaları içerir.",
-  
+    "version": 2,
     "builds": [
-      { 
-        "//": "FastAPI backend'in çalışması için ana uygulama dosyasını belirtiyoruz.",
-        "src": "main.py", 
+      {
+        "src": "main.py",
         "use": "@vercel/python"
+      },
+      {
+        "src": "static/**",
+        "use": "@vercel/static"
+      },
+      {
+        "src": "templates/**",
+        "use": "@vercel/static"
       }
     ],
-  
     "routes": [
-      { 
-        "//": "Statik dosyaların (CSS, JS, görseller) düzgün çalışmasını sağlar.",
-        "src": "/static/(.*)", 
+      {
+        "src": "/static/(.*)",
         "dest": "/static/$1"
       },
-      { 
-        "//": "HTML şablonlarını FastAPI üzerinden render etmek için ana uygulama dosyasına yönlendirir.",
-        "src": "/(.*)", 
+      {
+        "src": "/(.*)",
         "dest": "main.py"
       }
-    ],
-  
-    "functions": {
-      "main.py": {
-        "runtime": "python3.9"
-      }
-    }
+    ]
   }
   
