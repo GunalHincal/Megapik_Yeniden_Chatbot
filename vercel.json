@@ -1,20 +1,17 @@
 {
-    "version": 2,
-    "functions": {
-      "api/main.py": {
-        "runtime": "python",
-        "handler": "app",
-        "maxDuration": 10
-      }
-    },
-    "routes": [
-      { "src": "/static/(.*)", "dest": "/static/$1" },
-      { "src": "/(.*)", "dest": "api/main.py" }
-    ],
-    "build": {
-      "env": {
-        "GEMINI_API_KEY": "@gemini_api_key"
-      }
+  "version": 2,
+  "functions": {
+    "api/main.py": {
+      "runtime": "python"
+    }
+  },
+  "routes": [
+    { "src": "/static/(.*)", "dest": "/static/$1" },
+    { "src": "/(.*)", "dest": "api/main.py" }
+  ],
+  "build": {
+    "env": {
+      "GEMINI_API_KEY": "@gemini_api_key"
     }
   }
-  
+}
