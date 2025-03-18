@@ -1,0 +1,107 @@
+
+/* # Bu dosya Chatbot'un görünümünü düzenleyen CSS dosyasıdır - UI için CSS */
+
+/* Genel Stil */
+body {
+    font-family: Arial, sans-serif;
+    background: url('/static/background.jpeg') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Chat Container */
+.chat-container {
+    width: 450px;
+    background: rgba(255, 255, 255, 0.5); /* 🔹 %50 saydamlık (daha fazla arka plan görünsün) */
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: relative;
+}
+
+/* Kitap Kapağı */
+.book-cover {
+    width: 100%; /* 🔹 Genişliği tamamen dolduracak */
+    max-width: 400px; /* 🔹 Maksimum genişlik artırıldı */
+    height: auto; /* 🔹 Oranları korumak için otomatik yükseklik */
+    border-radius: 10px; /* 🔹 Hafif yuvarlatılmış köşeler */
+    margin-bottom: 15px;
+    display: block; /* 🔹 Merkeze hizalamak için */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Chatbox */
+#chat-box {
+    height: 350px;
+    overflow-y: auto;
+    padding: 15px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.4); /* 🔹 %40 saydamlık */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Mesaj Stilleri */
+.message {
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    max-width: 75%;
+    word-wrap: break-word;
+}
+
+/* Kullanıcı Mesajı */
+.user-message {
+    background: rgba(0, 132, 255, 0.8); /* 🔹 Kullanıcı mesajı biraz transparan */
+    color: white;
+    align-self: flex-end;
+}
+
+/* Bot Mesajı */
+.bot-message {
+    background: rgba(214, 240, 255, 0.7); /* 🔹 Transparan buz mavisi */
+    color: black;
+    align-self: flex-start;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    max-width: 75%;
+    word-wrap: break-word;
+    border: 1px solid rgba(179, 224, 242, 0.7); /* 🔹 Hafif buz mavisi çerçeve */
+}
+
+/* Giriş Alanı */
+.input-container {
+    display: flex;
+    margin-top: 10px;
+}
+
+input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+    background: rgba(255, 255, 255, 0.7); /* 🔹 Giriş alanı da biraz transparan */
+    backdrop-filter: blur(5px);
+    color: black;
+}
+
+button {
+    padding: 10px;
+    margin-left: 5px;
+    background: rgba(0, 132, 255, 0.9); /* 🔹 Hafif transparan buton */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: rgba(0, 91, 181, 0.9);
+}

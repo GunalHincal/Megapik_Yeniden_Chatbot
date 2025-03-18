@@ -1,0 +1,149 @@
+
+# 📌 Proje Bağımlılıkları Açıklamaları (`requirements-docs.txt`)
+
+# Bu belge, proje geliştirme sürecinde kullanılan tüm bağımlılıkların ne işe yaradığını ve neden eklendiğini açıklar. 
+# Böylece proje bakım sürecinde veya ekip çalışmasında anlaşılır bir referans sağlar.
+
+
+### **1️⃣ FastAPI**
+# **Neden eklendi?**
+# - Web tabanlı bir API sunucusu oluşturmak için kullanılır.
+# - Kullanıcıların sorduğu sorulara chatbot üzerinden cevap verebilmesi için gereklidir.
+# - Modern ve hızlı bir API geliştirme framework’üdür.
+# 📌 **Kurulum:** `pip install fastapi`
+
+
+### **2️⃣ Uvicorn**
+# **Neden eklendi?**
+# - FastAPI uygulamasını çalıştırmak için gereklidir.
+# - Asenkron destekli ve hızlı bir web sunucusudur.
+# 📌 **Kurulum:** `pip install uvicorn`
+
+
+### **3️⃣ google-generativeai**
+# **Neden eklendi?**
+# - Google Gemini API’yi kullanarak chatbot'un yanıt vermesini sağlar.
+# - LLM (Large Language Model) tabanlı yanıtlar oluşturmak için gereklidir.
+# 📌 **Kurulum:** `pip install google-generativeai`
+
+
+### **4️⃣ python-dotenv**
+# **Neden eklendi?**
+# - API anahtarlarını `.env` dosyasında saklayarak güvenli bir şekilde yönetmek için kullanılır.
+# - Örneğin, Gemini API anahtarı `.env` dosyasından alınır.
+# 📌 **Kurulum:** `pip install python-dotenv`
+
+
+### **5️⃣ LangChain**
+# **Neden eklendi?**
+# - LLM’ler ile çalışma, metin işlemleri, veri temizleme ve AI model entegrasyonu için gereklidir.
+# - Vektör tabanlı arama yaparak en alakalı bilgileri getirmek için kullanılır.
+# 📌 **Kurulum:** `pip install langchain`
+
+
+### **6️⃣ LangChain-Community**
+# **Neden eklendi?**
+# - LangChain’in en güncel topluluk destekli modüllerini içerir.
+# - Farklı veri kaynaklarından bilgi çekmek için gereklidir.
+# 📌 **Kurulum:** `pip install langchain-community`
+
+
+### **7️⃣ LangChain-Chroma**
+# **Neden eklendi?**
+# - Vektör tabanlı arama yapmak için kullanılan **ChromaDB** ile entegre çalışır.
+# - PDF içeriklerini küçük parçalara bölerek vektör tabanlı arama yapılmasını sağlar.
+# 📌 **Kurulum:** `pip install langchain-chroma`
+
+
+### **8️⃣ PyMuPDF**
+# **Neden eklendi?**
+# - PDF dosyalarından metin çıkarmak için kullanılır.
+# - Sayfa bazlı analiz yapmak için gereklidir.
+# 📌 **Kurulum:** `pip install pymupdf`
+
+
+### **9️⃣ pdf2image**
+# **Neden eklendi?**
+# - PDF dosyalarını **görüntüye dönüştürmek** için kullanılır.
+# - OCR (Optik Karakter Tanıma) işlemleri yapmak için gereklidir.
+# 📌 **Kurulum:** `pip install pdf2image`
+
+
+### **🔟 Pydantic**
+# **Neden eklendi?**
+# - FastAPI’de veri modellerini tanımlamak için kullanılır.
+# - Kullanıcıdan gelen JSON formatındaki verileri doğrulamak için gereklidir.
+# 📌 **Kurulum:** `pip install pydantic`
+
+
+### **1️⃣1️⃣ FastAPI Temel Bağımlılıklar**
+# **Neden eklendi?**
+# - **fastapi[all]** komutu, FastAPI’nin tüm bileşenlerini içeren bir kurulum sağlar.
+# - Şablon motoru (Jinja2) ve statik dosya servisleri (FastAPI StaticFiles) gibi özellikler için gereklidir.
+# 📌 **Kurulum:** `pip install fastapi[all]`
+
+
+### **📂 Hangi Dosya Ne İşe Yarıyor?**
+
+# Dosya Adı			        Amacı
+# 1️⃣ vector_store_api.py   PDF metnini chunk'lara böler ve ChromaDB'yi oluşturur.
+# 2️⃣ main.py			    FastAPI tabanlı chatbot API'sini çalıştırır.
+# 3️⃣ templates/index.html  Chatbot'un kullanıcı arayüzünü oluşturur (HTML).
+# 4️⃣ static/style.css	    UI için stil dosyası.
+# 5️⃣ static/script.js	    Kullanıcıdan mesaj alıp API'ye gönderen JavaScript dosyası.
+
+
+
+
+### **📌 Hangi Dosyayı Ne Zaman Çalıştırmalısın?**
+
+# 1️⃣ python vector_store_api.py   ChromaDB'yi oluştur ve metni chunk'lara böl.
+# 2️⃣ python main.py		       Chatbot API'sini başlat ve yanıtları al.
+
+
+
+
+### **📌 main.py ve vector_store_api.py Farkları**
+
+# Özellik		           	main.py		vector_store_api.py
+# API Endpointleri		    ✅ Evet		❌ Hayır
+# Vektör Deposu İşler mi?	✅ Evet		✅ Evet
+# PDF Chunk'lama Yapar mı?	❌ Hayır		✅ Evet
+# Chatbot İşlevi Var mı?	✅ Evet		❌ Hayır
+
+
+# 📌 **Özet:**
+# - `vector_store_api.py`: PDF’yi işler, metni parçalara böler ve ChromaDB’ye ekler.
+# - `main.py`: Kullanıcı sorularına cevap vermek için API sunucusunu çalıştırır.
+
+
+
+### **🔹 Bağımlılıkları Yüklemek İçin Komut**
+# Tüm bağımlılıkları yüklemek için aşağıdaki komutu çalıştır:
+
+# pip install -r requirements.txt
+
+
+# 📂 Proje Klasör Yapısı (FastAPI için)
+
+# 📂 megapik_chatbot/
+# │── 📂 data/               # Kitap PDF dosyası
+# │── 📂 chroma_db/          # ChromaDB vektör deposu
+# │── 📂 static/             # CSS & JavaScript dosyaları
+# │   │── 📄 style.css       # Chatbot'un görünümünü düzenleyen CSS dosyası - UI için CSS
+# │   │── 📄 script.js       # Kullanıcıdan mesaj alıp API'ye gönderen JavaScript
+# │── 📂 templates/          # HTML UI sayfaları
+# │   │── 📄 index.html      # Kullanıcı arayüzü için HTML dosyası
+# │── 📄 .env                # API Anahtarları (GEMINI_API_KEY)
+# │── 📄 chain_model.py      # Gelişmiş chatbot yanıtları
+# │── 📄 graph_model.py      # Graph ilişkileri
+# │── 📄 main.py             # FastAPI Sunucusu (Chatbot API), FastAPI Chatbot API
+# │── 📄 vector_store_api.py # PDF Chunk & ChromaDB İşlemleri
+# │── 📄 requirements.txt    # Gerekli Paketler
+
+
+
+# Terminalden klasör silme
+# Remove-Item -Recurse -Force .\chroma_db
+# Remove-Item -Recurse -Force __pycache__
+# Remove-Item -Recurse -Force .\chroma_db 

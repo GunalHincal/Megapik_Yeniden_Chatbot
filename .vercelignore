@@ -1,0 +1,9 @@
+
+# .vercelignore
+venv/
+__pycache__/
+*.sqlite3
+chroma_db/
+.DS_Store
+.env
+*.log

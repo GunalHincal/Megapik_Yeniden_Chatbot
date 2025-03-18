@@ -1,0 +1,25 @@
+
+# pip install fastapi[all]
+fastapi
+# pip install uvicorn
+uvicorn
+# pip install langchain
+langchain
+# pip install langchain-community
+langchain-community
+# pip install langchain-chroma
+langchain-chroma
+# pip install langchain-huggingface
+langchain-huggingface
+# pip install google-generativeai
+google-generativeai
+# pip install pydantic
+pydantic
+# pip install python-dotenv
+python-dotenv
+# pip install pymupdf
+PyMuPDF
+# pip install pdf2image
+pdf2image 
+# pip install langchain langchainhub networkx
+langchain langchainhub networkx
