@@ -12,6 +12,11 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
 import os
 
+# Eğer ChromaDB veritabanı yoksa, yeniden oluştur
+if not os.path.exists("chroma_db"):
+    print("📌 ChromaDB oluşturuluyor...")
+    os.system("python vector_store_api.py")
+
 # ✅ Ortam değişkenlerini yükle
 load_dotenv()
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")

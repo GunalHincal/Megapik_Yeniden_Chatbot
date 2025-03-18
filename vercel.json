@@ -1,28 +1,28 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "main.py",
-        "use": "@vercel/python"
-      },
-      {
-        "src": "static/**",
-        "use": "@vercel/static"
-      },
-      {
-        "src": "templates/**",
-        "use": "@vercel/static"
+  "version": 2,
+  "functions": {
+      "main.py": {
+          "runtime": "python@latest"
       }
-    ],
-    "routes": [
+  },
+  "routes": [
       {
-        "src": "/static/(.*)",
-        "dest": "/static/$1"
+          "src": "/static/(.*)",
+          "dest": "/static/$1"
       },
       {
-        "src": "/(.*)",
-        "dest": "main.py"
+          "src": "/(.*)",
+          "dest": "main.py"
       }
-    ]
+  ],
+  "build": {
+      "commands": [
+          "pip install -r requirements.txt",
+          "python vector_store_api.py"       
+      ]
+  },
+  "ignoreCommand": "echo 'Ignoring files...'",
+  "env": {
+      "PYTHONUNBUFFERED": "1"
   }
-  
+}
