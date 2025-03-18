@@ -21,5 +21,11 @@ python-dotenv
 PyMuPDF
 # pip install pdf2image
 pdf2image 
-# pip install langchain langchainhub networkx
-langchain langchainhub networkx
+# pip install langchainhub
+langchainhub
+# pip install networkx
+networkx
+
+
+# pip install -r requirements.txt
+

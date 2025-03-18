@@ -1,6 +1,18 @@
 
 // Kullanıcıdan mesaj alıp API'ye gönderen JavaScript dosyası
 
+const backgrounds = [];
+for (let i = 1; i <= 20; i++) {
+    backgrounds.push(`/static/background${i}.jpeg`);
+}
+
+let currentIndex = 0;
+
+function changeBackground() {
+    currentIndex = (currentIndex + 1) % backgrounds.length;
+    document.body.style.backgroundImage = `url(${backgrounds[currentIndex]})`;
+}
+
 function handleKeyPress(event) {
     if (event.key === "Enter") {
         sendMessage();
@@ -52,4 +64,7 @@ async function sendMessage() {
 
     // Sayfanın en altına otomatik kaydır
     chatBox.scrollTop = chatBox.scrollHeight;
+
+    // 📌 Her mesaj sonrası arka planı değiştir
+    changeBackground();
 }

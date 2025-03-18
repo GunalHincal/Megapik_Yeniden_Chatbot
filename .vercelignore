@@ -1,9 +1,17 @@
 
 # .vercelignore
+
+# Sanal Ortam
 venv/
 __pycache__/
+
+# Log ve Database Dosyaları
+*.log
 *.sqlite3
 chroma_db/
+
+# Çalışma Ortamı Dosyaları
 .DS_Store
 .env
-*.log
+
+

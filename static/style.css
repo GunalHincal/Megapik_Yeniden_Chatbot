@@ -6,6 +6,7 @@ body {
     font-family: Arial, sans-serif;
     background: url('/static/background.jpeg') no-repeat center center fixed;
     background-size: cover;
+    transition: background-image 0.5s ease-in-out; /* 🔹 Yumuşak geçiş efekti */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -57,8 +58,8 @@ body {
 
 /* Kullanıcı Mesajı */
 .user-message {
-    background: rgba(0, 132, 255, 0.8); /* 🔹 Kullanıcı mesajı biraz transparan */
-    color: white;
+    background: rgba(212, 187, 237, 0.7); /* 🔹 Lila (Leylak) rengi ve transparan */
+    color: black; /* 🔹 Yazı rengini siyah yaptık */
     align-self: flex-end;
 }
 
