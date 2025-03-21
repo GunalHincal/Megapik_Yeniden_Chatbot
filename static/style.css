@@ -21,7 +21,7 @@ body {
     border-radius: 12px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     text-align: center;
-    position: relative;
+    overflow: hidden; /* Taşan içerikler gizlensin */
 }
 
 /* Kitap Kapağı */
@@ -38,8 +38,8 @@ body {
 
 /* Chatbox */
 #chat-box {
-    height: 350px;
-    overflow-y: auto;
+    height: 350px;    
+    overflow-y: auto; /* 🔹 Taşarsa scrollbar çıksın */
     padding: 15px;
     border-radius: 10px;
     background: rgba(255, 255, 255, 0.4); /* 🔹 %40 saydamlık */

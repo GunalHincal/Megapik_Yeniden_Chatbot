@@ -45,11 +45,13 @@ def load_vector_store():
     vector_store = Chroma(
         persist_directory=CHROMA_DB_PATH,
         embedding_function=embeddings
-    ).as_retriever(search_type="mmr", search_kwargs={"k": 35})
+    )
 
-    return vector_store
+    retriever = vector_store.as_retriever(search_type="mmr", search_kwargs={"k": 35})
 
-vector_store = load_vector_store()
+    return vector_store, retriever
+
+vectorstore, vector_store = load_vector_store()  # retriever = vector_store
 
 # 📌 1️⃣ ChromaDB içinde kaç doküman olduğunu kontrol et
 @app.get("/vector_store_info")
@@ -99,9 +101,12 @@ def chat(request: ChatRequest):
     **Kurallar:**
     - Sorulara **sadece kitap içeriğine dayanarak** cevap ver, yerine ve sorusuna göre detaylı ve derinlemesine cevap verebilirsin.
     - Yorum sorularında özgün olabilirsin ama bilgi sorularında kitaba bağlı kal. 
-    - **Kısa ve öz anlat** ancak önemli detayları kaçırma. Çok yüzeysel bilgiler sunma. Olay örgüsü sorularında olayların arka planını, neden-sonuç ilişkisini ve kitabın ruhunu yansıt. Ancak çok da uzatma kitaba bağlı kal.
+    - **Kısa ve öz anlat** ancak önemli detayları kaçırma. Çok yüzeysel bilgiler sunma. Olay örgüsü sorularında olayların arka planını, 
+    - neden-sonuç ilişkisini ve kitabın ruhunu yansıt. Ancak çok da uzatma kitaba bağlı kal.
     - **Kitapta olmayan bilgileri uydurma!** Eğer doğrudan bir bilgi yoksa, sadece kitap içeriğinden çıkarımlar yap.
-    - **Selam, nasılsın, günaydın gibi genel sohbetlere cevap verme.** Eğer soru kitapla ilgili değilse, "Üzgünüm, sadece kitap ile ilgili sorulara cevap verebilirim.Ama seninle kitap hakkında konuşmayı çok isterim. Bana Megapik hakkında her şeyi sorabilirsin. 😊" tarzında bir cevap ver. Sen kendi cevabını ayarla her defasında.
+    - **Selam, nasılsın, günaydın gibi genel sohbetlere cevap verme.** Eğer soru kitapla ilgili değilse, 
+    - "Üzgünüm, sadece kitap ile ilgili sorulara cevap verebilirim.Ama seninle kitap hakkında konuşmayı çok isterim. 
+    - Bana Megapik hakkında her şeyi sorabilirsin. 😊" tarzında bir cevap ver. Sen kendi cevabını ayarla her defasında.
     - **İnsan gibi konuş.** Cümlelerin doğal, akıcı ve duygusal derinliği olsun. Okuyucu, gerçekten kitabı bilen biriyle sohbet ediyormuş gibi hissetsin.
     
     **Kitap İçeriği:**  
