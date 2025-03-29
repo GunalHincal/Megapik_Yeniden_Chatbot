@@ -13,5 +13,3 @@ chroma_db/
 # Çalışma Ortamı Dosyaları
 .env
 
-# Vercel ile ilgili gereksiz dosyalar
-.vercel/
