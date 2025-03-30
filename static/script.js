@@ -35,7 +35,7 @@ async function sendMessage() {
     document.getElementById("user-input").value = "";
 
     // API'ye istek gönder
-    let response = await fetch("/chat", {
+    let response = await fetch(window.location.origin + "/chat", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
