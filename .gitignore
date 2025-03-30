@@ -8,7 +8,6 @@ __pycache__/
 # Log ve Database Dosyaları
 *.log
 *.sqlite3
-chroma_db/
 
 # Çalışma Ortamı Dosyaları
 .env
