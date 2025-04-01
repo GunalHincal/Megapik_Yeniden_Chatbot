@@ -6,22 +6,27 @@ body {
     font-family: Arial, sans-serif;
     background: url('/static/background.jpeg') no-repeat center center fixed;
     background-size: cover;
-    transition: background-image 0.5s ease-in-out; /* 🔹 Yumuşak geçiş efekti */
+    transition: background-image 0.1s ease-in-out; /* 🔹 Yumuşak geçiş efekti */
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
+    align-items: flex-start; /* Yukarıdan başlasın */
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 /* Chat Container */
 .chat-container {
-    width: 450px;
+    width: 100%;      /* Ekrana tam oturur */
+    max-width: 450px; /* Masaüstü için maksimum genişlik */
     background: rgba(255, 255, 255, 0.5); /* 🔹 %50 saydamlık (daha fazla arka plan görünsün) */
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     text-align: center;
-    overflow: hidden; /* Taşan içerikler gizlensin */
+    overflow: hidden;           /* Taşan içerikler gizlensin */
+    box-sizing: border-box;     /* Padding hesaplamasına dahil edilir */
+    margin: 20px auto;          /* Ekran kenarlarında boşluk bırakır ve ortalar */
 }
 
 /* Kitap Kapağı */
@@ -34,6 +39,15 @@ body {
     display: block; /* 🔹 Merkeze hizalamak için */
     margin-left: auto;
     margin-right: auto;
+}
+
+/* Başlık */
+.chat-title {
+    font-size: 1.2rem;
+    white-space: nowrap;       /* Tek satır */
+    overflow: hidden;
+    text-overflow: ellipsis;   /* Taşarsa üç nokta */
+    margin-bottom: 10px;
 }
 
 /* Chatbox */
@@ -80,6 +94,7 @@ body {
 .input-container {
     display: flex;
     margin-top: 10px;
+    flex-direction: row; /* 🔹 Yatay hizalama */
 }
 
 input {
@@ -96,13 +111,45 @@ input {
 button {
     padding: 10px;
     margin-left: 5px;
+    margin-top: 0; /* default */
     background: rgba(0, 132, 255, 0.9); /* 🔹 Hafif transparan buton */
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background 0.1s ease, transform 0.1s ease; /* 🔹 Yumuşak geçiş */
 }
 
 button:hover {
     background: rgba(0, 91, 181, 0.9);
+}
+
+button:active {
+    background: rgba(0, 132, 255, 0.7); /* 🔹 Tıklama efekti */
+    transform: scale(0.97); /* 🔽 Buton biraz küçülür */
+}
+
+/* Mobil ve küçük ekranlar için responsive ayarlar */
+@media (max-width: 500px) {
+    #chat-box {
+        height: 250px;
+    }
+
+    .chat-title {
+        font-size: 1rem;
+    }
+    
+    .input-container {
+        flex-direction: column;
+    }
+
+    input, button {
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    button {
+        margin-left: 0;
+        margin-top: 5px;
+    }
 }
