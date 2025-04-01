@@ -1,13 +1,10 @@
 
-
 # Sanal Ortam
 venv/
 __pycache__/
 
 # Log ve Database Dosyaları
 *.log
-*.sqlite3
 
 # Çalışma Ortamı Dosyaları
 .env
-
