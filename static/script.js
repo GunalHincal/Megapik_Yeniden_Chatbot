@@ -1,70 +1,133 @@
 
 // Kullanıcıdan mesaj alıp API'ye gönderen JavaScript dosyası
 
+// 🌄 Tüm arka plan görsellerini /api/backgrounds endpoint'inden dinamik olarak alır
 const backgrounds = [];
-for (let i = 1; i <= 20; i++) {
-    backgrounds.push(`/static/background${i}.jpeg`);
+let currentIndex = -1;
+
+async function loadBackgrounds() {
+    try {
+        const response = await fetch("/api/backgrounds");
+
+        // 🔍 API yanıtını kontrol et
+        if (!response.ok) {
+            throw new Error(`Arka plan API hatası: ${response.status}`);
+        }
+
+        const imageUrls = await response.json();
+
+        for (const url of imageUrls) {
+            const img = new Image();
+            img.src = url;
+            backgrounds.push(img);
+        }
+
+        // 🔎 Yüklenen görselleri kontrol et
+        console.log("✅ Yüklenen görsel sayısı:", backgrounds.length);
+        console.log("🖼️ Yüklenen görseller:", backgrounds.map(img => img.src));
+
+        // Sayfa yüklendiğinde ilk görseli ayarla
+        if (backgrounds.length > 0) {
+            currentIndex = 0;
+            document.body.style.backgroundImage = `url(${backgrounds[currentIndex].src})`;
+            console.log("🧪 İlk görsel yüklendi:", backgrounds[currentIndex].src);
+        }
+
+    } catch (error) {
+        console.error("⚠️ Arka plan görselleri yüklenemedi:", error);
+    }
 }
 
-let currentIndex = 0;
-
+// 🎨 Arka planı sırayla değiştirir
 function changeBackground() {
+    if (backgrounds.length === 0) return;
+
     currentIndex = (currentIndex + 1) % backgrounds.length;
-    document.body.style.backgroundImage = `url(${backgrounds[currentIndex]})`;
+    const nextImage = backgrounds[currentIndex].src;
+    document.body.style.backgroundImage = `url(${nextImage})`;
+    console.log("🎨 Yeni arka plan:", nextImage);
 }
 
+// ⌨️ Klavyeden Enter'a basıldığında mesajı gönder
 function handleKeyPress(event) {
     if (event.key === "Enter") {
         sendMessage();
     }
 }
 
+// ✉️ Kullanıcı mesajını al, API'ye gönder, bot yanıtını yaz
 async function sendMessage() {
-    let userInput = document.getElementById("user-input").value.trim();
+    const inputField = document.getElementById("user-input");
+    const userInput = inputField.value.trim();
+    const sendButton = document.querySelector("button");
+
     if (userInput === "") return;
 
-    let chatBox = document.getElementById("chat-box");
-    
-    // Kullanıcı mesajını ekle
-    let userMessage = document.createElement("div");
+    const chatBox = document.getElementById("chat-box");
+
+    // 👤 Kullanıcı mesajını ekle
+    const userMessage = document.createElement("div");
     userMessage.className = "message user-message";
     userMessage.innerText = userInput;
     chatBox.appendChild(userMessage);
 
-    // Boş mesaj kutusu
-    document.getElementById("user-input").value = "";
+    // 📭 Input temizlensin ve devre dışı bırakılsın
+    inputField.value = "";
+    inputField.disabled = false;
+    sendButton.disabled = true;
 
-    // API'ye istek gönder
-    let response = await fetch(window.location.origin + "/chat", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ message: userInput })
-    });
-
-    let data = await response.json();
-
-    // Bot mesajını yazı animasyonu ile göster
-    let botMessage = document.createElement("div");
+    // 🤖 Bot mesaj kutusu (önce "Yükleniyor..." yazsın)
+    const botMessage = document.createElement("div");
     botMessage.className = "message bot-message";
+    botMessage.innerText = "Yanıt yazılıyor...";
     chatBox.appendChild(botMessage);
 
-    let text = data.response;
-    let index = 0;
-
-    function typeText() {
-        if (index < text.length) {
-            botMessage.innerHTML += text.charAt(index);
-            index++;
-            setTimeout(typeText, 30); // Harf harf yazma efekti
-        }
-    }
-    typeText();
-
-    // Sayfanın en altına otomatik kaydır
     chatBox.scrollTop = chatBox.scrollHeight;
 
-    // 📌 Her mesaj sonrası arka planı değiştir
+    try {
+        const response = await fetch("/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: userInput })
+        });
+
+        if (!response.ok) throw new Error("Sunucu hatası");
+
+        const data = await response.json();
+        const text = data.response;
+
+        // 🔤 Yazı animasyonu
+        botMessage.innerText = "";  // placeholder'ı temizle
+        let index = 0;
+
+        function typeText() {
+            if (index < text.length) {
+                botMessage.innerHTML += text.charAt(index);
+                index++;
+                setTimeout(typeText, 30);   // Yazı animasyonu için bekleme süresi
+            }
+        }
+
+        typeText();
+
+    } catch (error) {
+        botMessage.innerText = "⚠️ Bir hata oluştu. Lütfen tekrar deneyin.";
+        console.error("Chatbot hatası:", error);
+    }
+
+    // 🧼 Input tekrar aktif olsun
+    inputField.disabled = false;
+    sendButton.disabled = false;
+    inputField.focus();
+
+    // 📜 Chatbox'ı aşağı kaydır
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    // 🌄 Her mesaj sonrası arka plan değişsin
     changeBackground();
+}
+
+// Sayfa açıldığında arka planları yükle
+window.onload = async function () {
+    await loadBackgrounds();
 }
