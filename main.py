@@ -31,8 +31,8 @@ genai.configure(api_key=GEMINI_API_KEY)
 app = FastAPI()
 
 # 📌 HTML Şablonlar ve Statik Dosyalar
-templates = Jinja2Templates(directory="templates")
 app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="templates")
 
 # 📌 ChromaDB Yolu
 CHROMA_DB_PATH = "./chroma_db"
@@ -142,6 +142,19 @@ def chat(request: ChatRequest):
 @app.get("/", response_class=HTMLResponse)
 def home(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
+
+# 📌 5️⃣ Statik klasördeki tüm .jpeg görselleri sıralı olarak döndür
+@app.get("/api/backgrounds")
+def list_background_images():
+    try:
+        files = os.listdir("static")
+        allowed_extensions = (".jpeg", ".jpg", ".png", ".webp")
+        images = sorted([
+            f"/static/{f}" for f in files if f.lower().endswith(allowed_extensions)
+        ])
+        return images
+    except Exception as e:
+        return {"error": f"⚠️ Görsel listelenirken hata oluştu: {str(e)}"}
 
 # 🔹 FastAPI Sunucusunu Çalıştır
 if __name__ == "__main__":
