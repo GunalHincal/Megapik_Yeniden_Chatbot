@@ -81,12 +81,27 @@ def vector_store_debug():
         return {"error": f"⚠️ Hata oluştu: {str(e)}"}
        
 # 📌 5. FastAPI Sunucusunu Çalıştırmak İçin
+# Eğer bu dosyayı doğrudan çalıştırıyorsanız, FastAPI sunucusunu başlatın
+# ve PDF dosyasını okuyup chunk'ları oluşturun.
 if __name__ == "__main__":
     import uvicorn
-    print("📥 PDF oknuyor metin çekiliyor ve chunk'lar oluşturuluyor...")
+    import os
+    from dotenv import load_dotenv
+
+    # 🌍 Ortam değişkenlerini yükle
+    load_dotenv()
+
+    # 📥 Chunk oluştur ve terminale yazdır
+    print("📥 PDF okunuyor, metin çekiliyor ve chunk'lar oluşturuluyor...")
     response = create_vector_store()
     print(response["message"])  # ✅ Chunk sayısını terminale yazdır
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+
+    # 🌐 Sunucu ayarlarını ortamdan al
+    host = os.getenv("HOST", "127.0.0.1")
+    port = int(os.getenv("PORT", 8000))
+
+    # 🚀 FastAPI sunucusunu başlat
+    uvicorn.run(app, host=host, port=port)
 
 
 # Dosyayı Çalıştırma
