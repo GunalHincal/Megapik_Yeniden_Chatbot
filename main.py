@@ -3,6 +3,7 @@
 
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
+from fastapi.responses import Response
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
@@ -52,6 +53,11 @@ def load_vector_store():
     return vector_store, retriever
 
 vectorstore, vector_store = load_vector_store()  # retriever = vector_store
+
+# 📌 UptimeRobot'un yaptığı HEAD isteğine 200 OK döndürmek için boş endpoint
+@app.head("/")
+def head_root():
+    return Response(headers={"X-App-Status": "Megapik Chatbot Active"})
 
 # 📌 1️⃣ ChromaDB içinde kaç doküman olduğunu kontrol et
 @app.get("/vector_store_info")
