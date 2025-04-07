@@ -4,7 +4,7 @@ uvicorn==0.23.2
 langchain==0.3.23
 langchain-community==0.3.21
 langchain-chroma==0.2.2
-langchain-huggingface
+langchain-huggingface==0.1.2
 langchainhub==0.1.21
 
 google-generativeai==0.8.4
@@ -14,8 +14,9 @@ PyMuPDF==1.22.5
 pdf2image==1.17.0
 networkx==3.1
 
-transformers
-sentence-transformers
+transformers==4.40.0
+sentence-transformers==2.6.1
+
 
 
 
