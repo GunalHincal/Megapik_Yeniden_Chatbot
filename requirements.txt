@@ -1,31 +1,23 @@
-# pip install fastapi[all]
-fastapi
-# pip install uvicorn
-uvicorn
-# pip install langchain
-langchain
-# pip install langchain-community
-langchain-community
-# pip install langchain-chroma
-langchain-chroma
-# pip install langchain-huggingface
-langchain-huggingface
-# pip install google-generativeai
-google-generativeai
-# pip install pydantic
-pydantic
-# pip install python-dotenv
-python-dotenv
-# pip install pymupdf
-PyMuPDF
-# pip install pdf2image
-pdf2image 
-# pip install langchainhub
-langchainhub
-# pip install networkx
-networkx
+fastapi==0.110.0
+uvicorn==0.23.2
 
-pip 
+langchain==0.3.23
+langchain-community==0.3.21
+langchain-chroma==0.2.2
+langchain-huggingface==0.1.2
+langchainhub==0.1.21
+
+google-generativeai==0.8.4
+pydantic==2.7.4
+python-dotenv==1.0.1
+PyMuPDF==1.22.5
+pdf2image==1.17.0
+networkx==3.1
+
+transformers==4.41.1
+sentence-transformers==2.6.1
+tokenizers==0.19.1
+
 
 
 
