@@ -172,8 +172,8 @@ if __name__ == "__main__":
     load_dotenv()
 
     # 🔧 Ortamdan host ve port bilgisini al
-    host = os.getenv("HOST", "0.0.0.0")
-    port = int(os.getenv("PORT", 8000))
+    host = os.environ.get("HOST", "0.0.0.0")
+    port = int(os.environ.get("PORT", 8000))
 
     # 🚀 Sunucuyu başlat
     uvicorn.run(
