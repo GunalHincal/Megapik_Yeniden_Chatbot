@@ -162,6 +162,10 @@ def list_background_images():
     except Exception as e:
         return {"error": f"⚠️ Görsel listelenirken hata oluştu: {str(e)}"}
 
+
+# 📌 6️⃣ Statik dosyaları sunmak için FastAPI'yi yapılandır
+
+
 # 🔹 FastAPI Sunucusunu Çalıştır
 if __name__ == "__main__":
     import uvicorn
@@ -171,17 +175,18 @@ if __name__ == "__main__":
     # 🌍 Ortam değişkenlerini yükle
     load_dotenv()
 
-    # 🔧 Ortamdan host ve port bilgisini al
-    host = os.environ.get("HOST", "0.0.0.0")
-    port = int(os.environ.get("PORT", 8000))
+    # 🔧 Render'ın PORT ortam değişkenini al, yoksa local için fallback
+    port = int(os.environ.get("PORT", 8000))  # Render verecek PORT'u, localde 8000
 
     # 🚀 Sunucuyu başlat
     uvicorn.run(
         "main:app",
-        host=host,
+        host="0.0.0.0",  # Render için zorunlu
         port=port,
-        reload=False  # üretimde reload kapalı olmalı
+        reload=False  # Render'da reload gerekmez
     )
+
+
 
 
 # 🔹 Şimdi bu kodu test edelim:

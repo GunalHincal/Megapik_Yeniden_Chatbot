@@ -31,3 +31,10 @@ tokenizers==0.19.1
 # python -m venv venv
 # .\venv\Scripts\activate
 # Command Palette yeni venv i interpreter ata
+
+
+# Komut	                                             Açıklama
+# pip uninstall -r requirements.txt	                 Tüm paketleri kaldırır, ama her seferinde onay ister
+# pip uninstall -r requirements.txt -y	             Tüm paketleri onaysız, otomatik kaldırır
+# pip install -r requirements.txt	                 Requirements dosyasındaki paketleri yükler
+# pip freeze > requirements.txt	                     Ortamdaki tüm paketlerin versiyonlarını requirements.txt olarak kaydeder
