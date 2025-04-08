@@ -1,4 +1,4 @@
-const CACHE_NAME = 'megapik-cache-v2'; // ✅ Versiyonu artırdım
+const CACHE_NAME = 'megapik-cache-v3.0.0'; // ✅ Versiyonu artırdım
 const urlsToCache = [
   '/',
   '/static/style.css',
@@ -74,6 +74,11 @@ self.addEventListener('message', function(event) {
   if (event.data.action === 'skipWaiting') {
     self.skipWaiting();
   }
+});
+
+// Yeni service worker aktif olunca hemen kontrolü alsın
+self.addEventListener('activate', function(event) {
+  event.waitUntil(self.clients.claim());
 });
 
 // 🔔 Yeni versiyon için kullanıcıya bildirim (Opsiyonel, istersek eklenebilir)
