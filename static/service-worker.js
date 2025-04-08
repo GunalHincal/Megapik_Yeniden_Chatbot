@@ -43,19 +43,24 @@ self.addEventListener('install', function(event) {
   );
 });
 
-// ⚙️ Activate: Eski cache'leri temizle
+// ⚙️ Activate: Eski cache'leri temizle ve yeni SW hemen aktif olsun
 self.addEventListener('activate', function(event) {
-  console.log('🧹 Service Worker: Activate edildi.');
+  console.log('🧹 Service Worker: Activate edildi, eski cache temizleniyor...');
+
+  const cacheWhitelist = [CACHE_NAME];
+
   event.waitUntil(
     caches.keys().then(function(cacheNames) {
       return Promise.all(
         cacheNames.map(function(cacheName) {
-          if (cacheName !== CACHE_NAME) {
+          if (!cacheWhitelist.includes(cacheName)) {
             console.log('🗑️ Eski cache siliniyor:', cacheName);
             return caches.delete(cacheName);
           }
         })
       );
+    }).then(function() {
+      return self.clients.claim();
     })
   );
 });
@@ -76,9 +81,12 @@ self.addEventListener('message', function(event) {
   }
 });
 
-// Yeni service worker aktif olunca hemen kontrolü alsın
-self.addEventListener('activate', function(event) {
-  event.waitUntil(self.clients.claim());
-});
+// 🔔 Yeni versiyon için kullanıcıya bildirim (Opsiyonel)
+self.addEventListener('notificationclick', function(event) {
+  event.notification.close();
+  event.waitUntil(
+    clients.openWindow('/')
+  );
+}); 
 
 // 🔔 Yeni versiyon için kullanıcıya bildirim (Opsiyonel, istersek eklenebilir)
