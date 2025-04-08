@@ -13,6 +13,9 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
 import os
 
+# HuggingFace cache klasörü
+os.environ["TRANSFORMERS_CACHE"] = "/opt/render/.cache/huggingface"
+
 # Eğer ChromaDB veritabanı yoksa, yeniden oluştur
 if not os.path.exists("chroma_db"):
     print("📌 ChromaDB oluşturuluyor...")
