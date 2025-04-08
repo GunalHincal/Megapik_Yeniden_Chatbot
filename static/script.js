@@ -1,4 +1,3 @@
-
 // Kullanıcıdan mesaj alıp API'ye gönderen JavaScript dosyası
 
 // 🌄 Tüm arka plan görsellerini /api/backgrounds endpoint'inden dinamik olarak alır
@@ -130,4 +129,17 @@ async function sendMessage() {
 // Sayfa açıldığında arka planları yükle
 window.onload = async function () {
     await loadBackgrounds();
+}
+
+// 🚀 Service Worker yeni versiyonu olduğunda kullanıcıya bildirim göster
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.addEventListener('controllerchange', function() {
+        const updateNotification = document.createElement('div');
+        updateNotification.className = 'update-notification';
+        updateNotification.innerHTML = `
+            <p>🔄 Yeni bir güncelleme mevcut!</p>
+            <button onclick="location.reload()">Sayfayı Yenile</button>
+        `;
+        document.body.appendChild(updateNotification);
+    });
 }

@@ -1,10 +1,9 @@
-
 /* # Bu dosya Chatbot'un görünümünü düzenleyen CSS dosyasıdır - UI için CSS */
 
 /* Genel Stil */
 body {
     font-family: Arial, sans-serif;
-    background: url('/static/background.jpeg') no-repeat center center fixed;
+    background: url('/static/backgrounds/background.jpeg') no-repeat center center fixed;
     background-size: cover;
     transition: background-image 0.1s ease-in-out; /* 🔹 Yumuşak geçiş efekti */
     display: flex;
@@ -153,3 +152,36 @@ button:active {
         margin-top: 5px;
     }
 }
+
+/* ✅ Güncelleme Bildirimi (Yeni versiyon olduğunda görünür) */
+.update-notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.update-notification button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.update-notification button:hover {
+    background: #45a049;
+}
+.update-notification button:active {
+    background: #3e8e41;
+    transform: scale(0.97);
+}
+/* 🔹 Kapatma butonu için stil */

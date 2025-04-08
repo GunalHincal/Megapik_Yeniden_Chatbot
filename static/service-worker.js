@@ -9,27 +9,27 @@ const urlsToCache = [
   '/static/android-chrome-192x192.png',
   '/static/android-chrome-512x512.png',
   '/static/site.webmanifest',
-  // Background görselleri cache'le
-  '/static/background1.jpeg',
-  '/static/background2.jpeg',
-  '/static/background3.jpeg',
-  '/static/background4.jpeg',
-  '/static/background5.jpeg',
-  '/static/background6.jpeg',
-  '/static/background7.jpeg',
-  '/static/background8.jpeg',
-  '/static/background9.jpeg',
-  '/static/background10.jpeg',
-  '/static/background11.jpeg',
-  '/static/background12.jpeg',
-  '/static/background13.jpeg',
-  '/static/background14.jpeg',
-  '/static/background15.jpeg',
-  '/static/background16.jpeg',
-  '/static/background17.jpeg',
-  '/static/background18.jpeg',
-  '/static/background19.jpeg',
-  '/static/background20.jpeg'
+  // 🎨 Background görselleri cache'le (yeni klasör yolu!)
+  '/static/backgrounds/background1.jpeg',
+  '/static/backgrounds/background2.jpeg',
+  '/static/backgrounds/background3.jpeg',
+  '/static/backgrounds/background4.jpeg',
+  '/static/backgrounds/background5.jpeg',
+  '/static/backgrounds/background6.jpeg',
+  '/static/backgrounds/background7.jpeg',
+  '/static/backgrounds/background8.jpeg',
+  '/static/backgrounds/background9.jpeg',
+  '/static/backgrounds/background10.jpeg',
+  '/static/backgrounds/background11.jpeg',
+  '/static/backgrounds/background12.jpeg',
+  '/static/backgrounds/background13.jpeg',
+  '/static/backgrounds/background14.jpeg',
+  '/static/backgrounds/background15.jpeg',
+  '/static/backgrounds/background16.jpeg',
+  '/static/backgrounds/background17.jpeg',
+  '/static/backgrounds/background18.jpeg',
+  '/static/backgrounds/background19.jpeg',
+  '/static/backgrounds/background20.jpeg'
 ];
 
 // 📦 Install: Cache dosyaları yükle
@@ -67,6 +67,13 @@ self.addEventListener('fetch', function(event) {
       return response || fetch(event.request);
     })
   );
+});
+
+// ✅ Skip waiting fonksiyonunu en sona ekle
+self.addEventListener('message', function(event) {
+  if (event.data.action === 'skipWaiting') {
+    self.skipWaiting();
+  }
 });
 
 // 🔔 Yeni versiyon için kullanıcıya bildirim (Opsiyonel, istersek eklenebilir)
