@@ -147,3 +147,13 @@
 # Remove-Item -Recurse -Force .\chroma_db
 # Remove-Item -Recurse -Force __pycache__
 # Remove-Item -Recurse -Force .\chroma_db 
+
+
+# manifest dosyası
+# This file is used to define the web app manifest for the Megapik Chatbot. It includes metadata such as the app's name, description, icons, theme color, and display settings. The manifest allows the app to be installed on devices and provides a native-like experience. 
+# The icons are provided in different sizes for various devices, and the theme color is set to white. The app is designed to be displayed in portrait orientation and has a standalone display mode. The start URL and scope define the app's entry point and the range of URLs it can access.
+# The manifest is essential for Progressive Web Apps (PWAs) and helps improve the user experience by providing a consistent look and feel across different platforms. It also allows the app to be added to the home screen of mobile devices, making it easily accessible for users.     
+# The manifest file is typically linked in the HTML of the web app, allowing browsers to recognize and utilize it when the app is installed. It is important to keep the manifest file updated with any changes to the app's metadata or icons to ensure a smooth user experience.
+# The manifest file is typically named "site.webmanifest" and is placed in the static directory of the web app. It is important to ensure that the file is correctly linked in the HTML of the web app for browsers to recognize it.
+# The manifest file is a JSON file that contains key-value pairs defining the app's properties. It is important to follow the correct syntax and structure when creating the manifest file to avoid any issues with the app's installation or functionality.
+# The manifest file is a crucial part of the web app's configuration and should be carefully crafted to provide the best possible user experience. It is also important to test the manifest file on different devices and browsers to ensure compatibility and functionality. 
