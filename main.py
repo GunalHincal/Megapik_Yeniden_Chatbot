@@ -156,7 +156,7 @@ def home(request: Request):
 @app.get("/api/backgrounds")
 def list_background_images():
     try:
-        files = os.listdir("static")
+        files = os.listdir("static/backgrounds")
         allowed_extensions = (".jpeg", ".jpg", ".png", ".webp")
         images = sorted([
             f"/static/{f}" for f in files if f.lower().endswith(allowed_extensions)
