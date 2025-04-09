@@ -44,22 +44,17 @@ CHROMA_DB_PATH = "./chroma_db"
 # ✅ Vectorstore'u lazy load için None başlat
 vector_store = None
 
+# 📌 ChromaDB Yükleme
 def load_vector_store():
-    """ChromaDB vektör deposunu yükler (lazy load)."""
     global vector_store
     if vector_store is None:
-        print("🚀 Vectorstore yükleniyor...")
-        # Eğer ChromaDB veritabanı yoksa, yeniden oluştur
-        if not os.path.exists("chroma_db"):
-            print("📌 ChromaDB oluşturuluyor...")
-            os.system("python vector_store_api.py")
-
+        print("📦 Vector Store yükleniyor...")
         embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
         vector_store = Chroma(
             persist_directory=CHROMA_DB_PATH,
             embedding_function=embeddings
         ).as_retriever(search_type="mmr", search_kwargs={"k": 35})
-
+        print("✅ Vector Store yüklendi.")
     return vector_store
 
 # 📌 UptimeRobot'un yaptığı HEAD isteğine 200 OK döndürmek için boş endpoint
@@ -80,7 +75,8 @@ def vector_store_info():
 # 📌 2️⃣ Kullanıcı Sorusuna En İlgili Chunk'ları Getir
 def find_relevant_text(question: str, num_chunks: int = 30):
     """Kullanıcının sorusuna en alakalı chunk'ları getirir."""
-    docs = vector_store.invoke(question)
+    retriever = load_vector_store()  # ✅ Doğru çağırıyoruz
+    docs = retriever.invoke(question)
 
     if not docs:
         return None  # Chunk bulunamazsa None dön
