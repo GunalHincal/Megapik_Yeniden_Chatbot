@@ -67,7 +67,8 @@ def head_root():
 def vector_store_info():
     """ChromaDB'deki doküman sayısını döndürür."""
     try:
-        doc_count = vector_store.vectorstore._collection.count()
+        retriever = load_vector_store()  # ✅ Lazy load
+        doc_count = retriever.vectorstore._collection.count()
         return {"message": f"📊 ChromaDB içindeki doküman sayısı: {doc_count}"}
     except Exception as e:
         return {"error": f"⚠️ ChromaDB içeriği okunamadı: {str(e)}"}
