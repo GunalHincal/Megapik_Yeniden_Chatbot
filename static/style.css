@@ -185,3 +185,15 @@ button:active {
     transform: scale(0.97);
 }
 /* 🔹 Kapatma butonu için stil */
+
+.update-notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    z-index: 1000;
+  }

@@ -13,9 +13,6 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
 import os
 
-# HuggingFace cache klasörü
-os.environ["TRANSFORMERS_CACHE"] = "/opt/render/.cache/huggingface"
-
 # Eğer ChromaDB veritabanı yoksa, yeniden oluştur
 if not os.path.exists("chroma_db"):
     print("📌 ChromaDB oluşturuluyor...")
@@ -41,21 +38,21 @@ templates = Jinja2Templates(directory="templates")
 # 📌 ChromaDB Yolu
 CHROMA_DB_PATH = "./chroma_db"
 
-# ✅ Vectorstore'u lazy load için None başlat
-vector_store = None
-
 # 📌 ChromaDB Yükleme
 def load_vector_store():
-    global vector_store
-    if vector_store is None:
-        print("📦 Vector Store yükleniyor...")
-        embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
-        vector_store = Chroma(
-            persist_directory=CHROMA_DB_PATH,
-            embedding_function=embeddings
-        ).as_retriever(search_type="mmr", search_kwargs={"k": 35})
-        print("✅ Vector Store yüklendi.")
-    return vector_store
+    """ChromaDB vektör deposunu yükler."""
+    embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+    
+    vector_store = Chroma(
+        persist_directory=CHROMA_DB_PATH,
+        embedding_function=embeddings
+    )
+
+    retriever = vector_store.as_retriever(search_type="mmr", search_kwargs={"k": 35})
+
+    return vector_store, retriever
+
+vectorstore, vector_store = load_vector_store()  # retriever = vector_store
 
 # 📌 UptimeRobot'un yaptığı HEAD isteğine 200 OK döndürmek için boş endpoint
 @app.head("/")
@@ -67,17 +64,15 @@ def head_root():
 def vector_store_info():
     """ChromaDB'deki doküman sayısını döndürür."""
     try:
-        retriever = load_vector_store()  # ✅ Lazy load
-        doc_count = retriever.vectorstore._collection.count()
+        doc_count = vector_store.vectorstore._collection.count()
         return {"message": f"📊 ChromaDB içindeki doküman sayısı: {doc_count}"}
     except Exception as e:
         return {"error": f"⚠️ ChromaDB içeriği okunamadı: {str(e)}"}
 
 # 📌 2️⃣ Kullanıcı Sorusuna En İlgili Chunk'ları Getir
-def find_relevant_text(question: str, num_chunks: int = 70):
+def find_relevant_text(question: str, num_chunks: int = 30):
     """Kullanıcının sorusuna en alakalı chunk'ları getirir."""
-    retriever = load_vector_store()  # ✅ Doğru çağırıyoruz
-    docs = retriever.invoke(question)
+    docs = vector_store.invoke(question)
 
     if not docs:
         return None  # Chunk bulunamazsa None dön
@@ -88,7 +83,7 @@ def find_relevant_text(question: str, num_chunks: int = 70):
 # 📌 3️⃣ Gemini API ile Yanıt Üret
 class ChatRequest(BaseModel):
     message: str
-    num_chunks: int = 70  # Varsayılan olarak 70 chunk getirilecek
+    num_chunks: int = 30  # Varsayılan olarak 30 chunk getirilecek
 
 @app.post("/chat")
 def chat(request: ChatRequest):
@@ -130,7 +125,6 @@ def chat(request: ChatRequest):
     """
 
     try:
-        # 🧩 Modeli burada yükle (lazy load!)
         model = genai.GenerativeModel("models/gemini-1.5-pro-latest")
         response = model.generate_content(
             [prompt],  # 🔹 İçerik listesi içinde gönderilmeli!
@@ -160,14 +154,14 @@ def home(request: Request):
 def list_background_images():
     try:
         files = os.listdir("static/backgrounds")
+        # 🔹 Sadece görsel dosyalarını al
         allowed_extensions = (".jpeg", ".jpg", ".png", ".webp")
         images = sorted([
-            f"/static/backgrounds/{f}" for f in files if f.lower().endswith(allowed_extensions)
+            f"/static/{f}" for f in files if f.lower().endswith(allowed_extensions)
         ])
         return images
     except Exception as e:
         return {"error": f"⚠️ Görsel listelenirken hata oluştu: {str(e)}"}
-
 
 # 🔹 FastAPI Sunucusunu Çalıştır
 if __name__ == "__main__":
@@ -178,18 +172,17 @@ if __name__ == "__main__":
     # 🌍 Ortam değişkenlerini yükle
     load_dotenv()
 
-    # 🔧 Render'ın PORT ortam değişkenini al, yoksa local için fallback
-    port = int(os.environ.get("PORT", 8000))  # Render verecek PORT'u, localde 8000
+    # 🔧 Ortamdan host ve port bilgisini al
+    host = os.environ.get("HOST", "0.0.0.0")
+    port = int(os.environ.get("PORT", 8000))
 
     # 🚀 Sunucuyu başlat
     uvicorn.run(
         "main:app",
-        host="0.0.0.0",  # Render için zorunlu
+        host=host,
         port=port,
-        reload=False  # Render'da reload gerekmez
+        reload=False  # üretimde reload kapalı olmalı
     )
-
-
 
 
 # 🔹 Şimdi bu kodu test edelim:
