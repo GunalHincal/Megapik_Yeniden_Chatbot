@@ -74,7 +74,7 @@ def vector_store_info():
         return {"error": f"⚠️ ChromaDB içeriği okunamadı: {str(e)}"}
 
 # 📌 2️⃣ Kullanıcı Sorusuna En İlgili Chunk'ları Getir
-def find_relevant_text(question: str, num_chunks: int = 30):
+def find_relevant_text(question: str, num_chunks: int = 70):
     """Kullanıcının sorusuna en alakalı chunk'ları getirir."""
     retriever = load_vector_store()  # ✅ Doğru çağırıyoruz
     docs = retriever.invoke(question)
@@ -135,7 +135,7 @@ def chat(request: ChatRequest):
         response = model.generate_content(
             [prompt],  # 🔹 İçerik listesi içinde gönderilmeli!
             generation_config={
-                "max_output_tokens": 1000,  # 🔹 Daha iyi cevap kontrolü
+                "max_output_tokens": 800,  # 🔹 Daha iyi cevap kontrolü
                 "temperature": 0.2  # 🔹 Daha dengeli yanıtlar almak için 
             }
         )
