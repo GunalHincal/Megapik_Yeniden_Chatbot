@@ -52,7 +52,6 @@ def load_vector_store():
     )
 
     retriever = vector_store.as_retriever(search_type="mmr", search_kwargs={"k": 35})
-
     return vector_store, retriever
 
 vectorstore, vector_store = load_vector_store()  # retriever = vector_store
@@ -86,7 +85,7 @@ def find_relevant_text(question: str, num_chunks: int = 30):
 # 📌 3️⃣ Gemini API ile Yanıt Üret
 class ChatRequest(BaseModel):
     message: str
-    num_chunks: int = 30  # Varsayılan olarak 30 chunk getirilecek
+    num_chunks: int = 70  # Varsayılan olarak 70 chunk getirilecek
 
 @app.post("/chat")
 def chat(request: ChatRequest):
@@ -128,11 +127,12 @@ def chat(request: ChatRequest):
     """
 
     try:
+        # 🧩 Modeli burada yükle (lazy load!)
         model = genai.GenerativeModel("models/gemini-1.5-pro-latest")
         response = model.generate_content(
             [prompt],  # 🔹 İçerik listesi içinde gönderilmeli!
             generation_config={
-                "max_output_tokens": 800,  # 🔹 Daha iyi cevap kontrolü
+                "max_output_tokens": 1000,  # 🔹 Daha iyi cevap kontrolü
                 "temperature": 0.2  # 🔹 Daha dengeli yanıtlar almak için 
             }
         )
@@ -159,14 +159,11 @@ def list_background_images():
         files = os.listdir("static/backgrounds")
         allowed_extensions = (".jpeg", ".jpg", ".png", ".webp")
         images = sorted([
-            f"/static/{f}" for f in files if f.lower().endswith(allowed_extensions)
+            f"/static/backgrounds/{f}" for f in files if f.lower().endswith(allowed_extensions)
         ])
         return images
     except Exception as e:
         return {"error": f"⚠️ Görsel listelenirken hata oluştu: {str(e)}"}
-
-
-# 📌 6️⃣ Statik dosyaları sunmak için FastAPI'yi yapılandır
 
 
 # 🔹 FastAPI Sunucusunu Çalıştır
