@@ -41,20 +41,26 @@ templates = Jinja2Templates(directory="templates")
 # 📌 ChromaDB Yolu
 CHROMA_DB_PATH = "./chroma_db"
 
-# 📌 ChromaDB Yükleme
+# ✅ Vectorstore'u lazy load için None başlat
+vector_store = None
+
 def load_vector_store():
-    """ChromaDB vektör deposunu yükler."""
-    embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
-    
-    vector_store = Chroma(
-        persist_directory=CHROMA_DB_PATH,
-        embedding_function=embeddings
-    )
+    """ChromaDB vektör deposunu yükler (lazy load)."""
+    global vector_store
+    if vector_store is None:
+        print("🚀 Vectorstore yükleniyor...")
+        # Eğer ChromaDB veritabanı yoksa, yeniden oluştur
+        if not os.path.exists("chroma_db"):
+            print("📌 ChromaDB oluşturuluyor...")
+            os.system("python vector_store_api.py")
 
-    retriever = vector_store.as_retriever(search_type="mmr", search_kwargs={"k": 35})
-    return vector_store, retriever
+        embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+        vector_store = Chroma(
+            persist_directory=CHROMA_DB_PATH,
+            embedding_function=embeddings
+        ).as_retriever(search_type="mmr", search_kwargs={"k": 35})
 
-vectorstore, vector_store = load_vector_store()  # retriever = vector_store
+    return vector_store
 
 # 📌 UptimeRobot'un yaptığı HEAD isteğine 200 OK döndürmek için boş endpoint
 @app.head("/")
