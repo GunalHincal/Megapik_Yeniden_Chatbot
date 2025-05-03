@@ -10,5 +10,5 @@ services:
     envVars:
       - key: GEMINI_API_KEY
         value: senin_api_keyin_buraya
-      - key: TRANSFORMERS_CACHE       # Hugging Face model cache dizini
-        value: /tmp/hf_cache
+      - key: HF_HOME       # Hugging Face model cache dizini
+        value: /tmp/hf_home

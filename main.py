@@ -10,7 +10,7 @@ import google.generativeai as genai
 from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 import os
-print("🗂 TRANSFORMERS_CACHE =", os.getenv("TRANSFORMERS_CACHE"))
+os.environ["HF_HOME"] = "/tmp/hf_home"
 
 # Eğer ChromaDB veritabanı yoksa, yeniden oluştur
 if not os.path.exists("chroma_db"):
