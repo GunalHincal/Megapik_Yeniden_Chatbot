@@ -4,8 +4,11 @@ services:
     name: megapik-backend
     runtime: python
     plan: free
+    # Python için varsayılan build (requirements.txt’i kurar)
     buildCommand: ""
-    startCommand: uvicorn main:app --host 0.0.0.0 --port 8000
+    startCommand: uvicorn main:app --host 0.0.0.0 --port 8001
     envVars:
       - key: GEMINI_API_KEY
         value: senin_api_keyin_buraya
+      - key: TRANSFORMERS_CACHE       # Hugging Face model cache dizini
+        value: /tmp/hf_cache

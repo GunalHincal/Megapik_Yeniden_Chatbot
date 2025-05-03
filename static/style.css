@@ -2,6 +2,12 @@
 
 /* Genel Stil */
 body {
+    /* Genişliği yüzde 100 yapın */
+    width: 100vw;
+    /* Yan dolguları kaldırın */
+    padding: 0;
+    /* Varsayılan margin’i de sıfırlayın */
+    margin: 0;
     font-family: Arial, sans-serif;
     background: url('/backgrounds/background.jpeg') no-repeat center center fixed; /* 🔹 Arka plan resmi */
     background-size: cover;
@@ -14,44 +20,85 @@ body {
     box-sizing: border-box;
 }
 
-/* Chat Container */
+/* ✅ Responsive Chat Container */
 .chat-container {
-    display: flex;
-    flex-direction: column; /* Dikey hizalama */
-    justify-content: center; /* Dikey ortalama */
-    width: 100%;      /* Ekrana tam oturur */
-    height: 100vh; /* Ekranın tamamını kaplar */
-    max-width: 500px; /* Mobil için maksimum genişlik */
-    max-width: 450px; /* Masaüstü için maksimum genişlik */
-    background: rgba(255, 255, 255, 0.5); /* 🔹 %50 saydamlık (daha fazla arka plan görünsün) */
+    /* Masaüstü için */
+    width: 90%;
+    max-width: 800px;      /* En fazla 800px genişlik */
+    margin: 20px auto;     /* Üst/alt 20px, yatay ortala */
     padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    overflow: hidden;           /* Taşan içerikler gizlensin */
-    box-sizing: border-box;     /* Padding hesaplamasına dahil edilir */
-    margin: 20px auto;          /* Ekran kenarlarında boşluk bırakır ve ortalar */
+    height: calc(100vh - 40px); /* Üst/alt margin’leri de hesaba kat */
+    box-sizing: border-box;
 }
 
-/* Kitap Kapağı */
+/* Tablet’ler (600px ≤ genişlik ≤ 1024px) */
+@media (max-width: 1024px) and (min-width: 600px) {
+  .chat-container {
+    width: 95%;
+    max-width: none;
+    margin: 15px auto;
+    height: auto;         /* İçerik boyuna göre büyüsün */
+  }
+}
+
+/* Cep telefonları (≤599px) */
+@media (max-width: 599px) {
+  .chat-container {
+    width: 100%;
+    margin: 10px auto;
+    padding: 15px;
+    height: auto;
+  }
+}/* Kitap Kapağı */
 .book-cover {
     width: 100%; /* 🔹 Genişliği tamamen dolduracak */
     max-width: 400px; /* 🔹 Maksimum genişlik artırıldı */
     height: auto; /* 🔹 Oranları korumak için otomatik yükseklik */
     border-radius: 10px; /* 🔹 Hafif yuvarlatılmış köşeler */
+    margin: 0 auto 15px; /* 🔹 Üstte boşluk bırakır ve ortalar */
     margin-bottom: 15px;
     display: block; /* 🔹 Merkeze hizalamak için */
     margin-left: auto;
     margin-right: auto;
 }
 
+/* Kitap kapağı altındaki açıklama */
+.book-caption {
+    display: block;
+    max-width: 42%;                    /* Gerekirse genişliği sınırla */
+    margin: 12px auto;                 /* Üst-alt boşluk ve yatay ortala */
+    padding: 8px 14px;                 /* İç boşluk */
+    background: linear-gradient(
+    135deg,
+    rgba(0, 50, 43, 0.7) 20%,
+    rgba(75, 0, 130, 0.7) 50%,
+    rgba(30, 10, 70, 0.7) 80%
+    );
+    color: #fff;                       /* Beyaz metin */
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 6px;
+    text-align: center;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3); /* Hafif gölgeyle okunurluk */
+}
+
 /* Başlık */
 .chat-title {
+    /* Mevcut stiller… */
     font-size: 1.2rem;
-    white-space: nowrap;       /* Tek satır */
-    overflow: hidden;
-    text-overflow: ellipsis;   /* Taşarsa üç nokta */
     margin-bottom: 10px;
+    /* ---------- Aşağısını ekleyin ---------- */
+    background: linear-gradient(
+    135deg,
+    rgba(0, 50, 43, 0.7) 20%,
+    rgba(75, 0, 130, 0.7) 50%,
+    rgba(30, 10, 70, 0.7) 80%
+    );
+    padding: 6px 12px;                     /* Çevresine iç boşluk */
+    border-radius: 6px;                    /* Hafif yuvarlatılmış köşeler */
+    display: inline-block;                 /* Sadece yazı kadar genişlesin */
+    color: #fff;                     /* Beyaz yazı */         /* 000; ise Metni siyaha döndürür */
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3); /* Hafif gölgeyle okunurluk */
 }
 
 /* Chatbox */
@@ -75,17 +122,28 @@ body {
     word-wrap: break-word;
 }
 
-/* Kullanıcı Mesajı */
+/* ✉️ Kullanıcı Mesajı */
 .user-message {
-    background: rgba(212, 187, 237, 0.7); /* 🔹 Lila (Leylak) rengi ve transparan */
+    background: linear-gradient(
+    135deg,
+    rgba(191, 162, 220, 0.7) 20%,
+    rgba(133, 106, 149, 0.7) 50%,
+    rgba(117, 85, 149, 0.7) 80%
+    ); /* 🔹 Lila (Leylak) rengi ve transparan */
     color: black; /* 🔹 Yazı rengini siyah yaptık */
     align-self: flex-end;
     border-bottom-right-radius: 0; /* 🔹 Sağ alt köşeyi yuvarlatmadık */
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1); /* Hafif gölgeyle okunurluk */
 }
 
-/* Bot Mesajı */
+/* 🤖 Bot Mesajı */
 .bot-message {
-    background: rgba(214, 240, 255, 0.7); /* 🔹 Transparan buz mavisi */
+    background: linear-gradient(
+    135deg,
+    rgba(214, 240, 255, 0.7) 20%,
+    rgba(72, 130, 152, 0.7) 50%,
+    rgba(214, 245, 255, 0.7) 80%
+    ); /* 🔹 Hafif buz mavisi rengi ve transparan */
     color: black;
     align-self: flex-start;
     border: 1px solid rgba(179, 224, 242, 0.7); /* 🔹 Hafif buz mavisi çerçeve */
@@ -96,6 +154,7 @@ body {
     max-width: 75%;
     word-wrap: break-word;
     border: 1px solid rgba(179, 224, 242, 0.7); /* 🔹 Hafif buz mavisi çerçeve */
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1); /* Hafif gölgeyle okunurluk */
 }
 
 /* Giriş Alanı */
@@ -124,7 +183,12 @@ button {
     padding: 10px;
     margin-left: 5px;
     margin-top: 0; /* default */
-    background: rgba(0, 132, 255, 0.9); /* 🔹 Hafif transparan buton */
+    background: linear-gradient(
+    135deg,
+    rgba(214, 240, 255, 0.7) 20%,
+    rgba(34, 91, 160, 0.7) 50%,
+    rgba(48, 114, 135, 0.7) 80%
+    ); /* 🔹 Buton rengi */
     color: white;
     border: none;
     border-radius: 5px;
