@@ -1,0 +1,50 @@
+
+<!-- Kullanıcı arayüzü için HTML dosyası -->
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Megapik 'Yeniden' Chatbot</title>
+
+    <!-- Stil Dosyası -->
+    <link rel="stylesheet" href="/static/style.css">
+
+    <!-- Favicon ve Uygulama İkonları -->
+    <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/static/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/static/android-chrome-512x512.png">
+
+    <!-- Manifest Dosyası -->
+    <link rel="manifest" href="/static/site.webmanifest">
+</head>
+<body>
+    <div class="chat-container">
+        <img src="/static/megapik_cover.jpeg" alt="Megapik Kitap Kapağı" class="book-cover"> <!-- 📌 Kitap Kapağı -->
+        <h1 class="chat-title">📖 Megapik 'Yeniden' Chatbot</h1>
+        <div id="chat-box"></div>
+        <div class="input-container">
+            <input type="text" id="user-input" placeholder="Sorunuzu yazın..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()">Gönder</button>
+        </div>
+    </div>
+
+    <!-- Script Dosyası -->
+    <script src="/static/script.js"></script>
+    
+    <!-- Service Worker Kaydı -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/static/service-worker.js')
+        .then(reg => console.log('SW kaydedildi', reg))
+        .catch(err => console.log('SW kaydı başarısız', err));
+      }
+    </script>
+</body>
+</html>
+
+

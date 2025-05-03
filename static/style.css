@@ -1,0 +1,212 @@
+/* # Bu dosya Chatbot'un görünümünü düzenleyen CSS dosyasıdır - UI için CSS */
+
+/* Genel Stil */
+body {
+    font-family: Arial, sans-serif;
+    background: url('/backgrounds/background.jpeg') no-repeat center center fixed; /* 🔹 Arka plan resmi */
+    background-size: cover;
+    transition: background-image 0.1s ease-in-out; /* 🔹 Yumuşak geçiş efekti */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Yukarıdan başlasın */
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Chat Container */
+.chat-container {
+    display: flex;
+    flex-direction: column; /* Dikey hizalama */
+    justify-content: center; /* Dikey ortalama */
+    width: 100%;      /* Ekrana tam oturur */
+    height: 100vh; /* Ekranın tamamını kaplar */
+    max-width: 500px; /* Mobil için maksimum genişlik */
+    max-width: 450px; /* Masaüstü için maksimum genişlik */
+    background: rgba(255, 255, 255, 0.5); /* 🔹 %50 saydamlık (daha fazla arka plan görünsün) */
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    overflow: hidden;           /* Taşan içerikler gizlensin */
+    box-sizing: border-box;     /* Padding hesaplamasına dahil edilir */
+    margin: 20px auto;          /* Ekran kenarlarında boşluk bırakır ve ortalar */
+}
+
+/* Kitap Kapağı */
+.book-cover {
+    width: 100%; /* 🔹 Genişliği tamamen dolduracak */
+    max-width: 400px; /* 🔹 Maksimum genişlik artırıldı */
+    height: auto; /* 🔹 Oranları korumak için otomatik yükseklik */
+    border-radius: 10px; /* 🔹 Hafif yuvarlatılmış köşeler */
+    margin-bottom: 15px;
+    display: block; /* 🔹 Merkeze hizalamak için */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Başlık */
+.chat-title {
+    font-size: 1.2rem;
+    white-space: nowrap;       /* Tek satır */
+    overflow: hidden;
+    text-overflow: ellipsis;   /* Taşarsa üç nokta */
+    margin-bottom: 10px;
+}
+
+/* Chatbox */
+#chat-box {
+    flex: 1;
+    height: 350px;    
+    overflow-y: auto; /* 🔹 Taşarsa scrollbar çıksın */
+    padding: 15px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.4); /* 🔹 %40 saydamlık */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Mesaj Stilleri */
+.message {
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    max-width: 75%;
+    word-wrap: break-word;
+}
+
+/* Kullanıcı Mesajı */
+.user-message {
+    background: rgba(212, 187, 237, 0.7); /* 🔹 Lila (Leylak) rengi ve transparan */
+    color: black; /* 🔹 Yazı rengini siyah yaptık */
+    align-self: flex-end;
+    border-bottom-right-radius: 0; /* 🔹 Sağ alt köşeyi yuvarlatmadık */
+}
+
+/* Bot Mesajı */
+.bot-message {
+    background: rgba(214, 240, 255, 0.7); /* 🔹 Transparan buz mavisi */
+    color: black;
+    align-self: flex-start;
+    border: 1px solid rgba(179, 224, 242, 0.7); /* 🔹 Hafif buz mavisi çerçeve */
+    border-bottom-left-radius: 0; /* 🔹 Sol alt köşeyi yuvarlatmadık */
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    max-width: 75%;
+    word-wrap: break-word;
+    border: 1px solid rgba(179, 224, 242, 0.7); /* 🔹 Hafif buz mavisi çerçeve */
+}
+
+/* Giriş Alanı */
+.input-container {
+    display: flex;
+    margin-top: 10px;
+    flex-direction: row; /* 🔹 Yatay hizalama */
+    border-top: 1px solid #ddd; /* 🔹 Üst kenarına çizgi */
+    background: #fff; /* 🔹 Beyaz arka plan */
+    padding: 0.5rem; /* 🔹 İçerik alanı */
+    box-sizing: border-box; /* 🔹 Padding hesaplamasına dahil edilir */
+}
+
+input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+    background: rgba(255, 255, 255, 0.7); /* 🔹 Giriş alanı da biraz transparan */
+    backdrop-filter: blur(5px);
+    color: black;
+}
+
+button {
+    padding: 10px;
+    margin-left: 5px;
+    margin-top: 0; /* default */
+    background: rgba(0, 132, 255, 0.9); /* 🔹 Hafif transparan buton */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.1s ease, transform 0.1s ease; /* 🔹 Yumuşak geçiş */
+}
+
+button:hover {
+    background: rgba(0, 91, 181, 0.9);
+}
+
+button:active {
+    background: rgba(0, 132, 255, 0.7); /* 🔹 Tıklama efekti */
+    transform: scale(0.97); /* 🔽 Buton biraz küçülür */
+}
+
+/* Mobil ve küçük ekranlar için responsive ayarlar */
+@media (max-width: 500px) {
+    #chat-box {
+        height: 250px;
+    }
+
+    .chat-title {
+        font-size: 1rem;
+    }
+    
+    .input-container {
+        flex-direction: column;
+    }
+
+    input, button {
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    button {
+        margin-left: 0;
+        margin-top: 5px;
+    }
+}
+
+/* ✅ Güncelleme Bildirimi (Yeni versiyon olduğunda görünür) */
+.update-notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.update-notification button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.update-notification button:hover {
+    background: #45a049;
+}
+.update-notification button:active {
+    background: #3e8e41;
+    transform: scale(0.97);
+}
+/* 🔹 Kapatma butonu için stil */
+
+.update-notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    z-index: 1000;
+}

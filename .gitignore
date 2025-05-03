@@ -1,0 +1,16 @@
+
+# Byte-compiled / cache dosyaları
+__pycache__/
+*.py[cod]
+
+# Geçici log / cache / test dosyaları
+*.log
+
+# Çalışma Ortamı Dosyaları
+*.pyc
+*.pyo
+*.pyd
+
+# Sanal ortam
+venv/
+.env
