@@ -54,6 +54,11 @@ def load_vector_store():
 
 vector_store, retriever = load_vector_store()  
 
+
+@app.get("/") 
+async def read_root():
+    return {"status": "ok"}
+
 # 📌 UptimeRobot'un yaptığı HEAD isteğine 200 OK döndürmek için boş endpoint
 @app.head("/")
 def head_root():
