@@ -165,6 +165,7 @@ def chat(request: ChatRequest):
 def home(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
+
 # 📌 5️⃣ Statik klasördeki tüm .jpeg görselleri sıralı olarak döndür
 @app.get("/api/backgrounds")
 def list_background_images():
