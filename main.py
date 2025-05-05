@@ -54,7 +54,6 @@ def load_vector_store():
 
 vector_store, retriever = load_vector_store()  
 
-
 @app.get("/health")
 async def read_health():
     return {"status": "ok"}
@@ -165,7 +164,6 @@ def chat(request: ChatRequest):
 def home(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
-
 # 📌 5️⃣ Statik klasördeki tüm .jpeg görselleri sıralı olarak döndür
 @app.get("/api/backgrounds")
 def list_background_images():
@@ -194,6 +192,9 @@ if __name__ == "__main__":
 # 🔹 Eğer bu dosyayı doğrudan çalıştırıyorsanız, FastAPI sunucusunu başlatın
 # uvicorn main:app --reload --port 8001
 
+# eğer json bilgisi gelirse pycache ı temizleyip komutu yeniden çalıştırın
+# Remove-Item -Recurse -Force __pycache__
+# uvicorn main:app --reload --port 8001
 
 
 # 📌 8️⃣ Şu soruları sor:

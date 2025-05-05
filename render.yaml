@@ -1,14 +1,15 @@
-
 services:
   - type: web
-    name: megapik-backend
+    name: Megapik-Yeniden
     runtime: python
     plan: free
-    # Python için varsayılan build (requirements.txt’i kurar)
-    buildCommand: ""
-    startCommand: uvicorn main:app --host 0.0.0.0 --port 8001
+
+    # Artık önbellek kullanmadan yükleme yapacağız
+    buildCommand: "pip install --no-cache-dir -r requirements.txt"
+
+    # Dinamik PORT ve tek worker ile başlatma
+    startCommand: "uvicorn main:app --host 0.0.0.0 --port $PORT --workers 1 --timeout-keep-alive 120 --log-level warning"
+
     envVars:
       - key: GEMINI_API_KEY
         value: senin_api_keyin_buraya
-      - key: HF_HOME       # Hugging Face model cache dizini
-        value: /tmp/hf_home
